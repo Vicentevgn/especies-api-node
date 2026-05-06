@@ -1,0 +1,20 @@
+{
+  "name": "especies-api",
+  "version": "1.0.0",
+  "description": "API REST para gerenciamento de espécies com Node.js, Prisma e PostgreSQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vicentevgn/especies-api-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vicentevgn/especies-api-node/issues"
+  },
+  "homepage": "https://github.com/Vicentevgn/especies-api-node#readme"
+}
