@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Vicentevgn/especies-api-node/issues"
   },
-  "homepage": "https://github.com/Vicentevgn/especies-api-node#readme"
+  "homepage": "https://github.com/Vicentevgn/especies-api-node#readme",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "dotenv": "^17.4.2",
+    "prisma": "^5.22.0"
+  }
 }
