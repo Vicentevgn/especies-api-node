@@ -1,26 +1,32 @@
 import { PrismaClient } from "@prisma/client";
-import { Prisma } from "@prisma/client";
+import {getWeather} from "./weather.service";
 
 const prisma = new PrismaClient();
 
 export async function createSpecies(data: any, userId: string) {
-    try {
-        return await prisma.species.create({
-            data: {
-                ...data,
-                userId,
-            },
-        });
-    } catch (err) {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            if (err.code === "P2002") {
-                throw new Error("Species already exists for this user");
-            }
-        }
-        throw err;
-    }
-}
+    let weatherData = null;
 
+    try {
+        weatherData = await getWeather(
+            data.latitude,
+            data.longitude
+        );
+    } catch (err) {
+        console.error("Weather API error:", err);
+    }
+
+    return prisma.species.create({
+        data: {
+            commonName: data.commonName,
+            scientificName: data.scientificName,
+            category: data.category,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            userId,
+            externalData: weatherData,
+        },
+    });
+}
 export async function listSpecies(userId: string) {
     return prisma.species.findMany({
         where: {
