@@ -27,10 +27,47 @@ export async function createSpecies(data: any, userId: string) {
         },
     });
 }
+
 export async function listSpecies(userId: string) {
     return prisma.species.findMany({
         where: {
             userId,
         },
     });
+}
+
+export async function speciesByCategory(userId: string) {
+    const species = await prisma.species.findMany({
+        where: {
+            userId,
+        },
+        select: {
+            category: true,
+            commonName: true,
+            scientificName: true,
+        },
+    });
+
+    const grouped = species.reduce((acc: any, item) => {
+        const category = item.category;
+
+        if (!acc[category]) {
+            acc[category] = {
+                category,
+                count: 0,
+                species: [],
+            };
+        }
+
+        acc[category].count += 1;
+
+        acc[category].species.push({
+            commonName: item.commonName,
+            scientificName: item.scientificName,
+        });
+
+        return acc;
+    }, {});
+
+    return Object.values(grouped);
 }

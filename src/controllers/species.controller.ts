@@ -31,3 +31,20 @@ export async function list(req: Request, res: Response) {
         });
     }
 }
+
+export async function speciesByCategory(
+    req: Request,
+    res: Response
+) {
+    try {
+        const userId = (req as any).userId;
+
+        const data = await speciesService.speciesByCategory(userId);
+
+        return res.json(data);
+    } catch (err: any) {
+        return res.status(400).json({
+            error: err.message,
+        });
+    }
+}
