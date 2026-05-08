@@ -28,10 +28,38 @@ export async function createSpecies(data: any, userId: string) {
     });
 }
 
-export async function listSpecies(userId: string) {
+export async function listSpecies(
+    userId: string,
+    search?: string,
+    category?: string
+) {
     return prisma.species.findMany({
         where: {
             userId,
+
+            ...(search && {
+                OR: [
+                    {
+                        commonName: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        scientificName: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
+            }),
+
+            ...(category && {
+                category: {
+                    equals: category,
+                    mode: "insensitive",
+                },
+            }),
         },
     });
 }

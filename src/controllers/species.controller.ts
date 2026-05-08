@@ -22,7 +22,13 @@ export async function list(req: Request, res: Response) {
     try {
         const userId = (req as any).userId;
 
-        const species = await speciesService.listSpecies(userId);
+        const { search, category } = req.query;
+
+        const species = await speciesService.listSpecies(
+            userId,
+            search as string,
+            category as string
+        );
 
         return res.json(species);
     } catch (err: any) {
